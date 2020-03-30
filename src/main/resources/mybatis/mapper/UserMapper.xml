@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jason.dao.UserDao">
+
+
+    <sql id="BASE_COLUMN">
+        id,username,password,role
+    </sql>
+<!--    User getUserById(Integer id) ;-->
+    <select id="getUserById" resultType="user">
+        select <include refid="BASE_COLUMN"/>
+        from tb_user
+        where id = #{id}
+    </select>
+
+
+<!--    User getUserByUsernameAndPassword(String username,String password);-->
+    <select id="getUserByUsernameAndPassword" resultType="user">
+        select <include refid="BASE_COLUMN"/>
+        from tb_user
+        where username=#{username}
+        and password=#{password}
+    </select>
+
+<!--    User getUserByUsername(String username);-->
+    <select id="getUserByUsername" resultType="user">
+        select <include refid="BASE_COLUMN"/>
+        from tb_user
+        where username=#{username}
+    </select>
+</mapper>

@@ -1,0 +1,40 @@
+spring:
+  datasource:
+    username: root
+    password: root
+    url: jdbc:mysql://127.0.0.1:3306/myblog?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  thymeleaf:
+    cache: true
+  servlet:
+    multipart:
+      max-file-size: 30MB
+      max-request-size: 30MB
+#mybatis
+mybatis:
+  mapper-locations: classpath:mybatis/mapper/*.xml
+  config-location: classpath:mybatis/mybatis-config.xml
+#pagehelper
+pagehelper:
+  helper-dialect: mysql
+
+#七牛云
+qiniu:
+  access-key: xxx
+  domain: xxx
+  bucket-name: xxx
+  zone: xxx
+  secret-key: xxx
+
+server:
+  port: 80
+
+
+#github
+github:
+  client:
+    id: xxx
+    secret: xxx
+  redirect:
+    uri: xxx
+

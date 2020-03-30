@@ -1,0 +1,112 @@
+<div id="content">
+        <header th:replace="admin/common-template/page-header::page_header('Home')" class="page-header"></header>
+    <section class="dashboard-counts no-padding-bottom">
+        <div class="container-fluid">
+            <div class="row bg-white has-shadow">
+                <!-- Blog Item -->
+                <div class="col-xl-4 col-sm-6">
+                    <div class="item d-flex align-items-center">
+                        <div class="icon bg-green"><i class="icon-bill"></i></div>
+                        <div class="title"><span><br>Blog     </span>
+                            <div class="progress">
+                                <div role="progressbar" style="width: 100%; height: 4px;" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-green"></div>
+                            </div>
+                        </div>
+                        <div class="number"><strong  th:text="${articleNum}">40</strong></div>
+                    </div>
+                </div>
+
+                <!-- Comment Item -->
+                <div class="col-xl-4 col-sm-6">
+                    <div class="item d-flex align-items-center">
+                        <div class="icon bg-violet"><i class="icon-user"></i></div>
+                        <div class="title"><br><span>Comment</span>
+                            <div class="progress">
+                                <div role="progressbar" style="width: 100%; height: 4px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-violet"></div>
+                            </div>
+                        </div>
+                        <div class="number"><strong th:text="${commentNum}">25</strong></div>
+                    </div>
+                </div>
+
+                <!-- Category Item -->
+                <div class="col-xl-4 col-sm-6">
+                    <div class="item d-flex align-items-center">
+                        <div class="icon bg-red"><i class="icon-padnote"></i></div>
+                        <div class="title"><span><br>Category</span>
+                            <div class="progress">
+                                <div role="progressbar" style="width: 100%; height: 4px;" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-red"></div>
+                            </div>
+                        </div>
+                        <div class="number"><strong th:text="${categoryNum}">70</strong></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <br>
+    <section class="updates no-padding-top">
+        <div class="container-fluid">
+            <div class="row">
+                <!-- 最新文章 -->
+                <div class="col-lg-4">
+                    <div class="recent-updates card">
+                        <div class="card-header">
+                            <h3 class="h4">Recent Posts</h3>
+                        </div>
+                        <div class="card-body no-padding">
+                            <!-- Item-->
+                            <div th:each="article:${articles.list}" class="item d-flex justify-content-between">
+                                <div class="info d-flex">
+                                    <a target="_blank" th:href="@{/article(articleId=${article.id})}" style="color: #0F192A" class="card-link title" th:text="${article.title}"></a>
+                                </div>
+                                <div class="date text-right"><span th:text="${#dates.format(article.updateTime,'yyyy-MM-dd')}" >2017-11-1</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 最新评论 -->
+                <div class="col-lg-5">
+                    <div class="articles card">
+                        <div class="card-header d-flex align-items-center">
+                            <h2 class="h3">Recent Comment</h2>
+                        </div>
+                        <div class="card-body no-padding">
+                            <div th:each="comment: ${comments.list}" class="item d-flex align-items-center">
+                                <div class="image"><img th:src="@{/resource_admin/img/matthew.jpg}" src="../../static/resource_admin/img/avatar-1.jpg" alt="..." class="img-fluid rounded-circle"></div>
+                                <div class="text">
+                                    <h3 class="h5" th:text="${comment.nickname}">Nickname
+                                        <span th:text="${#dates.format(comment.createTime,'yyyy-MM-dd')}">2020-11-10</span>
+                                    </h3>
+                                    <small th:text="${comment.content}">content</small></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 最新分类 -->
+                <div class="col-lg-3">
+                    <div class="recent-updates card">
+                        <div class="card-header">
+                            <h3 class="h4">Recent Categories</h3>
+                        </div>
+                        <div class="card-body no-padding">
+                            <!-- Item-->
+                            <div th:each="category: ${categories.list}" class="item d-flex justify-content-between">
+                                <div class="info d-flex">
+                                    <div class="title">
+                                        <a target="_blank" style="color: #0F192A" class="card-link title"
+                                           th:href="@{/category(categoryId=${category.id})}"
+                                           th:text="${category.name}">Lorem ipsum dolor sit amet.</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+

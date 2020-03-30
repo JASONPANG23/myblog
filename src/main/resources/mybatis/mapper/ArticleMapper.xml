@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jason.dao.ArticleDao">
+
+    <sql id="BASE_COLUMN">
+         id ,title , content,  description ,first_picture , published , comment  , views , category_id , create_time , update_time
+    </sql>
+
+    <sql id="BASE_COLUMN_EXCLUDE_CONTENT">
+        id ,title,  description ,first_picture , published , comment  , views , category_id , create_time , update_time
+    </sql>
+
+<!--    id  title content  description  first_picture   published  comment   views  create_time  update_time  category_id  tag_id , tag_name-->
+
+<!--    id  title  content  description  first_picture  published  comment   views  create_time update_time category_id  category_name-->
+
+    <resultMap id="articleMap" type="article">
+        <id column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="content" property="content"/>
+        <result column="description" property="description"/>
+        <result column="first_picture" property="firstPicture"/>
+        <result column="published" property="published"/>
+        <result column="comment" property="comment"/>
+        <result column="views" property="views"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+
+
+<!--        一对一分类-->
+        <association property="category" javaType="category">
+            <id column="category_id" property="id"/>
+            <result column="category_name" property="name"/>
+        </association>
+
+        <association property="commentNum"
+                     select="com.jason.dao.CommentDao.getCommentNumByArticleId"
+                     column="id">
+        </association>
+
+        <!--        一对多标签-->
+        <collection property="tagList" ofType="tag" select="com.jason.dao.TagMapDao.getTagList" column="id">
+
+        </collection>
+    </resultMap>
+
+    <select id="getArticleCountByCategoryId" resultType="integer">
+        select count(t1.id)
+        from tb_article t1
+        where category_id = #{categoryId}
+    </select>
+
+    <select id="getArticlePublishCountByCategoryId" resultType="integer">
+        select count(id)
+        from tb_article
+        where category_id = #{categoryId}
+        and published = 1
+    </select>
+
+    <select id="getArticles" resultMap="articleMap">
+        SELECT
+        t1.`id` ,
+        t1.`title` ,
+        <if test="contents == true">
+            t1.`content` ,
+        </if>
+        t1.`description` ,
+        t1.`first_picture` ,
+        t1.`published`,
+        t1.`comment`,
+        t1.`views`,
+        t1.`create_time`,
+        t1.`update_time`,
+        t1.`category_id` AS category_id,
+        t2.name AS category_name
+        FROM tb_article t1
+        LEFT JOIN tb_category t2
+        ON t1.category_id = t2.id
+        <if test="tagId != null">
+            LEFT JOIN tb_tag_article t3
+            ON t1.`id` = t3.`article_id`
+        </if>
+        <where>
+            <if test="id != null">
+                t1.id=#{id}
+            </if>
+            <if test="title != null">
+                and title = #{title}
+            </if>
+            <if test="published != null and published.code!=-1">
+                and published = #{published.code}
+            </if>
+            <if test="categoryId != null">
+                and category_id = #{categoryId}
+            </if>
+            <if test="tagId != null">
+                and t3.tag_id = #{tagId}
+            </if>
+        </where>
+        order by update_time desc
+
+    </select>
+
+    <delete id="deleteArticleByCategoryId">
+        delete from tb_article
+        where category_id = #{categoryId}
+    </delete>
+
+    <delete id="deleteArticleById">
+        delete from tb_article
+        where id = #{id}
+    </delete>
+
+    <insert id="addArticle" useGeneratedKeys="true" keyProperty="id">
+        insert into
+        tb_article(
+            <include refid="BASE_COLUMN"/>
+        )values(null,#{title},#{content},#{description},
+        #{firstPicture},#{published},#{comment},#{views},
+        #{category.id},#{createTime},#{updateTime})
+    </insert>
+
+    <update id="updateArticle">
+        update tb_article
+        <trim prefix="set" suffixOverrides=",">
+            <if test="title!=null">
+                title=#{title},
+            </if>
+            <if test="content!=null">
+                content=#{content},
+            </if>
+            <if test="description!=null">
+                description=#{description},
+            </if>
+            <if test="firstPicture!=null">
+                first_picture=#{firstPicture},
+            </if>
+            <if test="published!=null">
+                published=#{published},
+            </if>
+            <if test="comment!=null">
+                comment=#{comment},
+            </if>
+            <if test="updateTime!=null">
+                update_time=#{updateTime},
+            </if>
+            <if test="category.id!=null">
+                category_id=#{category.id}
+            </if>
+        </trim>
+        where id=#{id}
+
+    </update>
+
+    <update id="incView"  parameterType="article">
+        update tb_article
+        set views = views + #{views,jdbcType=INTEGER}
+        where id=#{id}
+    </update>
+
+
+
+</mapper>

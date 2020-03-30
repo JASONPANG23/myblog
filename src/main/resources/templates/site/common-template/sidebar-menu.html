@@ -1,0 +1,24 @@
+<div class="sidebar-menu">
+    <div class="close-area">
+        <span class="close"><i class="icon fa fa-times-circle"></i></span>
+    </div>
+    <div class="main-menu">
+        <nav>
+            <ul>
+                <li class="active "><a th:href="@{/}"  href="#">home</a>
+                </li>
+                <li class="sub-menu">
+                    <a href="#">category
+                        <span class="fa fa-angle-down"></span>
+                    </a>
+                    <ul class="sub-menu-item">
+                        <li><a th:each="category: ${categories.list}"
+                               th:href="@{/category(categoryId=${category.id})}"
+                               href="#" th:text="${category.name}">category one</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">about me</a></li>
+            </ul>
+        </nav>
+    </div>
+</div>

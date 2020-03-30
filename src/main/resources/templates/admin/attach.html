@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+  <head th:replace="admin/fragment::head">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Bootstrap Material Admin by Bootstrapious.com</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="robots" content="all,follow">
+    <!-- Bootstrap CSS-->
+    <link rel="stylesheet" href="../../static/resource_admin/vendor/bootstrap/css/bootstrap.min.css">
+    <!-- Font Awesome CSS-->
+    <link rel="stylesheet" href="../../static/resource_admin/vendor/font-awesome/css/font-awesome.min.css">
+    <!-- Fontastic Custom icon font-->
+    <link rel="stylesheet" href="../../static/resource_admin/css/fontastic.css">
+    <!-- Google fonts - Poppins -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,700">
+    <!-- theme stylesheet-->
+    <link rel="stylesheet" href="../../static/resource_admin/css/style.default.css" id="theme-stylesheet">
+    <!-- Custom stylesheet - for your changes-->
+    <link rel="stylesheet" href="../../static/resource_admin/css/custom.css">
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="../../static/resource_admin/img/favicon.ico">
+    <!-- Tweaks for older IEs--><!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+  </head>
+  <body>
+    <div class="page">
+      <!-- Main Navbar-->
+      <header th:replace="admin/fragment::header" class="header">
+        <nav class="navbar">
+          <!-- Search Box-->
+          <div class="container-fluid">
+            <div class="navbar-holder d-flex align-items-center justify-content-between">
+              <!-- Navbar Header-->
+              <div class="navbar-header">
+                <!-- Navbar Brand --><a href="index.html" class="navbar-brand d-none d-sm-inline-block">
+                  <div class="brand-text d-none d-lg-inline-block"><span>Bootstrap </span><strong>Dashboard</strong></div>
+                  <div class="brand-text d-none d-sm-inline-block d-lg-none"><strong>BD</strong></div></a>
+                <!-- Toggle Button--><a id="toggle-btn" href="#" class="menu-btn active"><span></span><span></span><span></span></a>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </header>
+      <div class="page-content d-flex align-items-stretch">
+        <!-- Side Navbar -->
+        <nav th:replace="admin/fragment::menu(2)" class="side-navbar">
+          <!-- Sidebar Header-->
+          <div class="sidebar-header d-flex align-items-center">
+            <div class="avatar"><img src="../../static/resource_admin/img/avatar-1.jpg" alt="..." class="img-fluid rounded-circle"></div>
+            <div class="title">
+              <h1 class="h4">Jason Pang</h1>
+            </div>
+          </div>
+          <span class="heading">Main</span>
+          <ul class="list-unstyled">
+                    <li><a href="index.html"> <i class="icon-home"></i>主页</a></li>
+                    <li  class="active"><a href="blog.html"> <i class="icon-grid"></i>博客管理 </a></li>
+                    <li><a href="blog-input.html"> <i class="fa fa-bar-chart"></i>发布博客 </a></li>
+                    <li><a href="category.html"> <i class="icon-padnote"></i>分类管理 </a></li>
+                    <li><a href="login.html"> <i class="icon-interface-windows"></i>注销</a></li>
+          </ul>
+        </nav>
+        <div class="content-inner">
+          <!-- Page Header-->
+          <header th:replace="admin/fragment::page_header('Attach')" class="page-header">
+            <div class="container-fluid">
+              <h2 class="no-margin-bottom">Tables</h2>
+            </div>
+          </header>
+          <section class="tables">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="card">
+                    <div class="card-header d-flex align-items-center">
+                      <h3 class="h4">图片管理</h3>
+                    </div>
+                    <div class="card-body">
+                      <div id="table-container" class="table-responsive">
+                        <table th:fragment="list" class="table">
+                          <thead>
+                            <tr>
+                              <th>#</th>
+                              <th></th>
+                              <th>创建时间</th>
+                              <th>文件大小</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr th:each="attach ,i: ${attaches}">
+                              <td th:text="${i.count}" scope="row">1</td>
+                              <td>
+                                <a th:href="${attach.url}" href="#">
+                                <img style="width: 60px; height: 50px;"
+                                     th:src="${attach.url}"
+                                     src="http://q74jklpez.bkt.clouddn.com/09935f80-9a5d-4f1a-90ea-a4ee7662a72c"
+                                     alt="">
+                                </a>
+                              </td>
+                              <td th:text="${attach.putTime}">2020-10-02</td>
+                              <td >
+                                <span th:text="${#numbers.formatDecimal(attach.fileSize,1,2)}">
+                                  12
+                                </span>mb</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <!-- Page Footer-->
+          <footer th:replace="admin/fragment::footer" class="main-footer">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-sm-6">
+                  <p>Your company &copy; 2017-2019</p>
+                </div>
+                <div class="col-sm-6 text-right">
+                  <p>Design by Bootstrapious.More Templates <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a></p>
+                  <!-- Please do not remove the backlink to us unless you support further theme's development at https://bootstrapious.com/donate. It is part of the license conditions. Thank you for understanding :)-->
+                </div>
+              </div>
+            </div>
+          </footer>
+        </div>
+      </div>
+    </div>
+    <th:block th:replace="admin/fragment::script">
+      <!-- JavaScript files-->
+      <script src="../../static/resource_admin/vendor/jquery/jquery.min.js"></script>
+      <script src="../../static/resource_admin/vendor/popper.js/umd/popper.min.js"> </script>
+      <script src="../../static/resource_admin/vendor/bootstrap/js/bootstrap.min.js"></script>
+      <script src="../../static/resource_admin/vendor/jquery.cookie/jquery.cookie.js"> </script>
+      <script src="../../static/resource_admin/vendor/chart.js/Chart.min.js"></script>
+      <script src="../../static/resource_admin/vendor/jquery-validation/jquery.validate.min.js"></script>
+      <!-- Main File-->
+      <script src="../../static/resource_admin/js/front.js"></script>
+    </th:block>
+
+  <script>
+
+    function deleteArticleById(articleId){
+      var url = "/admin/article/delete";
+      var data = {id:articleId} ;
+      $("#table-container").load(url,data);
+    }
+
+    function toPage(page,size){
+      var url = "/admin/article/list";
+      var data = {page:page,size:size} ;
+      $("#table-container").load(url,data);
+    }
+
+
+  </script>
+
+  </body>
+</html>

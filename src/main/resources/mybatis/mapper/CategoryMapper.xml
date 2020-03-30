@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jason.dao.CategoryDao">
+
+    <sql id="BASE_COLUMN">
+        id ,name
+    </sql>
+    
+    <resultMap id="categoryMap" type="category">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <association property="blogNum"
+                     select="com.jason.dao.ArticleDao.getArticleCountByCategoryId"
+                     column="id">
+        </association>
+    </resultMap>
+
+    <resultMap id="categoryIncludePublishMap" type="category">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <association property="blogNum"
+                     select="com.jason.dao.ArticleDao.getArticlePublishCountByCategoryId"
+                     column="id">
+        </association>
+    </resultMap>
+
+
+<!--    getCategoriesIncludePublish-->
+    <select id="getCategoriesIncludePublish" resultMap="categoryIncludePublishMap">
+        select <include refid="BASE_COLUMN"/>
+        from tb_category
+        order by id desc
+    </select>
+<!--    List<Category> getCategories() ;-->
+    <select id="getCategories" resultMap="categoryMap">
+        select <include refid="BASE_COLUMN"/>
+        from tb_category
+        order by id desc
+    </select>
+<!--    Category getCategoryById(Integer id);-->
+    <select id="getCategoryById" resultMap="categoryMap">
+        select <include refid="BASE_COLUMN"/>
+        from tb_category
+        where id = #{id}
+    </select>
+<!--    void addCategory(Category category) ;-->
+    <insert id="addCategory">
+        insert into tb_category(name)values(#{name})
+    </insert>
+
+<!--    void deleteCategoryById(Integer id) ;-->
+    <delete id="deleteCategoryById">
+        delete from tb_category where id = #{id}
+    </delete>
+
+<!--    updateCategoryById-->
+    <update id="updateCategory">
+        update tb_category
+        set name = #{name}
+        where id = #{id}
+    </update>
+</mapper>

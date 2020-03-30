@@ -1,0 +1,27 @@
+<div class="banner-area banner-three">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="banner-content">
+                    <div class="banner-title white">
+                        <h1 th:text="${#servletContext.getAttribute('userInfo').blogTitle}">Jason's Blog</h1>
+                    </div>
+                    <div class="banner-subtitle white ">
+                        <h4 th:text="${#servletContext.getAttribute('userInfo').blogSubtitle}">笔记整理与分享</h4>
+                    </div>
+                    <div class="banner-info white">
+                        <p th:text="${#servletContext.getAttribute('userInfo').description}">还能回头说明旅途尚未开始<br />当你无法回头的时候 <br> 才是真正的旅途 </p>
+                    </div>
+                    <div class="social-media">
+                        <ul>
+                            <li><a target="_blank" th:href="'https://www.weibo.com/u/'+${#servletContext.getAttribute('userInfo').weibo}" href="#"><i class="fa fa-weibo"></i></a></li>
+                            <li><a target="_blank" th:href="'https://github.com/'+${#servletContext.getAttribute('userInfo').github}" href="#"><i class="fa fa-github"></i></a></li>
+                            <li><a target="_blank" th:href="'https://user.qzone.qq.com/'+${#servletContext.getAttribute('userInfo').qq}" href="#"><i class="fa fa-qq"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

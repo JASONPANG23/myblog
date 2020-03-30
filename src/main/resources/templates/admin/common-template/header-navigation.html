@@ -1,0 +1,17 @@
+<nav class="side-navbar">
+    <!-- Sidebar Header-->
+    <div class="sidebar-header d-flex align-items-center">
+        <div class="avatar"><img th:src="@{${#servletContext.getAttribute('userInfo').icon}}" src="../../static/resource_admin/img/avatar-1.jpg" alt="..." class="img-fluid rounded-circle"></div>
+        <div class="title">
+            <h1 class="h4" th:text="${#servletContext.getAttribute('userInfo').nickname}">Jason Pang</h1>
+        </div>
+    </div>
+    <span class="heading">Main</span>
+    <ul class="list-unstyled">
+        <li><a th:href="@{/admin/index}" href="index.html"> <i class="icon-home"></i>主页</a></li>
+        <li><a th:href="@{/admin/article}" href="article.html"> <i class="icon-grid"></i>博客管理</a></li>
+        <li><a th:href="@{/admin/article_edit}" href="post_article.html"> <i class="fa fa-bar-chart"></i>发布博客</a></li>
+        <li><a th:href="@{/admin/category}" href="category.html"> <i class="icon-padnote"></i>分类管理</a></li>
+        <li><a  th:href="@{/admin/logout}"><i class="icon-interface-windows"></i>注销</a></li>
+    </ul>
+</nav>

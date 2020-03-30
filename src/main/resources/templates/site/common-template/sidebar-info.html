@@ -1,0 +1,81 @@
+<div class="col-lg-4">
+    <div class="sidebar-widget">
+        <!-- 个人简介 -->
+        <div class="single-widget profile-widget box-shadow">
+            <div class="widget-inner text-center">
+                <div class="profile-img">
+                    <a href="#">
+                        <img th:src="@{${#servletContext.getAttribute('userInfo').icon}}"
+                             src="../../static/resource_site/images/profile/1.png" alt="profile">
+                    </a>
+                </div>
+                <div class="profile-name">
+                    <h3><a  th:text="${#servletContext.getAttribute('userInfo').nickname}">小杰升</a></h3>
+                    <p th:text="${#servletContext.getAttribute('userInfo').introduction}">Java&Unity我都好喜欢</p>
+                </div>
+                <div class="social-media">
+                    <ul>
+                        <li><a target="_blank" th:href="'https://www.weibo.com/u/'+${#servletContext.getAttribute('userInfo').weibo}" href="#"><i class="fa fa-weibo"></i></a></li>
+                        <li><a target="_blank" th:href="'https://github.com/'+${#servletContext.getAttribute('userInfo').github}" href="#"><i class="fa fa-github"></i></a></li>
+                        <li><a target="_blank" th:href="'https://user.qzone.qq.com/'+${#servletContext.getAttribute('userInfo').qq}" href="#"><i class="fa fa-qq"></i></a></li>
+
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+        <!-- 分类列表 -->
+        <div class="single-widget category-widget box-shadow">
+            <div class="widget-inner">
+                <div class="widget-title">
+                    <h3>分类</h3>
+                </div>
+                <div class="category-list">
+                    <ul>
+                        <li th:each="category:${categories.list}">
+                            <a th:href="@{/category(categoryId=${category.id})}" href="#">[[${category.name}]]
+                                <span th:text="${category.blogNum}">10</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        <!-- 标签-->
+        <div class="single-widget banner-widget box-shadow">
+            <div class="widget-inner">
+                <div class="widget-title">
+                    <h3>标签</h3>
+                </div>
+                <a th:each="tag: ${tags}"
+                   th:href="@{@{/tag(tagId=${tag.id})}}"
+                   style="margin: 3px; background: white ; color: #8981ff; border: 1px solid #8981ff ;"
+                   type="" class="btn  btn-sm" >
+                    <span th:text="${tag.name}"></span>&nbsp; <span th:text="${tag.count}"></span>
+                </a>
+            </div>
+        </div>
+
+        <!-- 最新博客 -->
+        <div class="single-widget recent-post-widget box-shadow">
+            <div class="widget-inner">
+                <div class="widget-title">
+                    <h3>最新文章</h3>
+                </div>
+                <div class="recent-post-list">
+                    <div class="single-post"
+                         th:each="recentArticle: ${recentArticles.list}">
+                        <div class="posty-img">
+                            <a th:href="@{/article(articleId=${recentArticle.id})}" href="#"><img th:src="@{${recentArticle.firstPicture}}" src="../../static/resource_site/images/blog/r1.png" alt="post"></a>
+                        </div>
+                        <div class="post-title">
+                            <h4><a th:href="@{/article(articleId=${recentArticle.id})}" href="#" th:text="${recentArticle.title}">We denounce with right indig</a></h4>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

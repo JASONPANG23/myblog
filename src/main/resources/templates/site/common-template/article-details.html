@@ -1,0 +1,276 @@
+<div id="content" class="col-lg-8" >
+    <div class="blog-details-area section">
+        <div class="single-post box-shadow">
+            <div class="post-thumnile">
+                <div class="single-image">
+                    <img th:src="@{${article.firstPicture}}" src="../../static/resource_site/images/blog/1.jpg" alt="blog">
+                </div>
+            </div>
+            <div class="post-title">
+                <h3 th:text="${article.title}">Tourism in cox's bazar</h3>
+            </div>
+            <div class="blog-meta">
+                <ul>
+                    <li> <span class="flaticon-comment-black-oval-bubble-shape user"></span>
+                        <p><a href="#" th:text="${article.category.name}">Admin</a> </p>
+                    </li>
+                    <li> <span class="flaticon-calendar clendar"></span>
+                        <p th:text="${#dates.format(article.updateTime,'yyyy-MM-dd')}">20 Jan 2018  </p>
+                    </li>
+                    <li th:if="${article.comment}"> <span class="flaticon-chat comment"></span> <p>Comment</p></li>
+                    <li > 浏览数： <p th:text="${article.views}">Comment</p></li>
+                </ul>
+            </div>
+            <div class="blog-content " th:utext="${article.content}">
+
+            </div>
+
+
+            <div class="social-share fix"  th:if="${articleTags}!=null and  ${#arrays.length(articleTags)} != 0">
+                <div class="share-title pull-left">
+                    <h4>标签:</h4>
+                </div>
+
+                <div class="share-media pull-right">
+                    <!-- 标签-->
+                    <div class="single-widget banner-widget box-shadow">
+                        <a th:each="tag: ${articleTags}"
+                           th:href="@{@{/tag(tagId=${tag.id})}}"
+                           style="margin: 3px; background: white ; color: #8981ff; border: 1px solid #8981ff ;"
+                           type="" class="btn  btn-sm" >
+                            <span th:text="${tag.name}"></span>&nbsp; <span th:text="${tag.count}"></span>
+                        </a>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!--todo:上一篇 下一篇
+        <div class="pagination-area">
+            <div class="pagination">
+                <ul>
+                    <li class="prev"><a href="#">PRev</a></li>
+                    <li class="next pull-right"><a href="#">Next</a></li>
+                </ul>
+            </div>
+        </div>
+        -->
+
+        <!--评论-->
+        <div class="comment-area box-shadow mt-70" th:if="${article.comment}">
+            <div class="section-title">
+                <!--										<span th:text="${article.commentNum}">02</span>-->
+                <h3>评论</h3>
+            </div>
+            <div th:fragment="comment" id="comment-container">
+                <div th:fragment="commentList">
+                    <!--todo:评论展示-->
+                    <div class="comment-list"
+                         th:if="${comments}!=null and ${#arrays.length(comments)} > 0">
+                        <div th:each= "comment: ${comments}">
+                            <div class="single-comment">
+                                <div class="member-image">
+                                    <img th:src="@{/resource_admin/img/matthew.jpg}" src="../../static/resource_site/images/blog/comment1.png" alt="comment img">
+                                </div>
+                                <div class="comment-info">
+                                    <div class="comment-title">
+                                        <h4>
+                                            <strong th:text="${comment.nickname}">Smith</strong>
+                                            <small th:text="${#dates.format(comment.createTime,'yyyy-MM-dd')}">6 Dec,20</small>
+                                        </h4>
+                                    </div>
+                                    <div class="comment-content">
+                                        <p th:text="${comment.content}">Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                                            Lorem Ipsum has been the industry's standard dummy text ever since the </p>
+                                    </div>
+                                    <div class="comment-replay">
+                                        <a  class="replay-btn"
+                                            th:data-parentid="${comment.id}"
+                                            th:data-direct="${comment.nickname}"
+                                            onclick="reply(this.getAttribute('data-parentid'),
+																		this.getAttribute('data-direct'))">回复</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--											子评论-->
+                            <div th:if="${comment.comments} != null  and  ${#arrays.length(comment.comments)} > 0"
+                                 th:each="subComment: ${comment.comments}"
+                                 class="single-comment pl-100">
+                                <div class="member-image">
+                                    <img th:src="@{/resource_admin/img/matthew.jpg}" src="../../static/resource_site/images/blog/comment2.png" alt="comment img">
+                                </div>
+                                <div class="comment-info">
+                                    <div class="comment-title">
+                                        <h4>
+                                            <strong th:text="${subComment.nickname}">Jhon Smith</strong>
+                                            @ <span th:text="${subComment.direct}"></span>
+                                            <small th:text="${#dates.format(subComment.createTime,'yyyy-MM-dd')}">6 Dec,20</small>
+                                        </h4>
+                                    </div>
+                                    <div class="comment-content">
+                                        <p th:text="${subComment.content}">Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                                            Lorem Ipsum has been the industry's standard dummy text ever since the </p>
+                                    </div>
+                                    <div class="comment-replay">
+                                        <a  class="replay-btn"
+                                            th:data-direct="${subComment.nickname}"
+                                            th:data-parentid="${comment.id}"
+                                            onclick="reply(this.getAttribute('data-parentid'),
+																		this.getAttribute('data-direct'))">回复</a>
+                                    </div>
+                                    <!--													<div class="comment-replay">-->
+                                    <!--														<a  class="replay-btn"-->
+                                    <!--															href="https://github.com/login/oauth/authorize?client_id=90586013e99bbafefa9f&redirect_uri=http://localhost:8080/guihub/callback?scope=user&state=1"-->
+                                    <!--														>登录</a>-->
+                                    <!--													</div>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- todo 评论提交-->
+            <div id="comment-form" class="comment-from mt-63">
+                <br>
+                <br>
+                <br>
+                <br>
+                <div class="section-title">
+                    <h3>Leave A Comment</h3>
+                </div>
+                <!--								表单-->
+                <form id="defaultForm">
+                    <input type="hidden" name="direct"  />
+                    <input type="hidden" name="articleId" th:value="${article.id}"/>
+                    <input type="hidden" name="parent.id" value="-1"/>
+
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group box-shadow">
+                                <input type="text" class="form-control" required id="name"
+                                       name="comment-nickname" placeholder="Your name ">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group box-shadow">
+                                <input type="email" class="form-control" required id="emailtwo"
+                                       name="comment-email" placeholder="Email">
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group box-shadow">
+                                <textarea name="comment-content" id="messagestwo" required cols="30" rows="10" placeholder="Message"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="from-btn">
+                                <button id="commentpost-btn" type="button" class="primary-btn">发布</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <script th:src="@{https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js}" src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+    <script th:src="@{https://cdn.bootcss.com/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.min.js}"></script>
+    <script type="text/javascript" language="javascript">
+        $(function () {
+            $("#commentpost-btn").click(function () {
+                var boo = $("#defaultForm").data('bootstrapValidator').isValid();
+                if(boo) {
+                    //todo 表单校验
+                    postdata();
+                    $("[name='comment-content']").attr("placeholder", "");
+                    $("[name='parent.id']").val(-1);
+                    $("[name='direct']").val(null);
+
+                    $("[name='comment-email']").val('');
+                    $("[name='comment-nickname']").val('');
+                    $("[name='comment-content']").val('');
+                }
+            });
+        });
+        //点击发布评论
+
+        function postdata() {
+            var url = "/comments/post";
+            var data = {
+                "parent.id" : $("[name='parent.id']").val(),
+                "articleId" : $("[name='articleId']").val(),
+                "direct" : $("[name='direct']").val(),
+                "email" : $("[name='comment-email']").val(),
+                "nickname" : $("[name='comment-nickname']").val(),
+                "content" : $("[name='comment-content']").val()
+            };
+            var func = function (data) {
+                $('#defaultForm').data('bootstrapValidator').resetForm(true);
+
+                // $(document).scrollTo($("#comment-container"),500);
+            }
+            $("#comment-container").load(url,data,func);
+        }
+
+        function reply(parent_id,direct){
+            $("[name='comment-content']").attr("placeholder", "@"+direct).focus();
+            $("[name='parent.id']").val(parent_id);
+            $("[name='direct']").val(direct) ;
+
+            // $(document).scrollTo($('#comment-form'),500);
+        }
+        //	验证
+        $(document).ready(function() {
+            $('#defaultForm').bootstrapValidator({
+                // live: 'disabled',
+                message: '无效信息',
+                fields: {
+                    "comment-nickname": {
+                        message: '无效用户名',
+                        validators: {
+                            notEmpty: {
+                                message: '用户名不能为空'
+                            },
+                            stringLength: {
+                                min: 3,
+                                max: 18,
+                                message: '用户名在3到18个字符之间'
+                            }
+                        }
+                    },
+                    "comment-content": {
+                        message: '内容不合法',
+                        validators: {
+                            notEmpty: {
+                                message: '内容不能为空'
+                            },
+                            stringLength: {
+                                min: 3,
+                                max: 200,
+                                message: '内容在3到200个字符之间'
+                            }
+                        }
+                    },
+                    "comment-email": {
+                        validators: {
+                            emailAddress: {
+                                message: '邮箱无效'
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Validate the form manually
+            $('#validateBtn').click(function() {
+                $('#defaultForm').bootstrapValidator('validate');
+            });
+
+            $('#resetBtn').click(function() {
+                $('#defaultForm').data('bootstrapValidator').resetForm(true);
+            });
+        });
+    </script>
+</div>

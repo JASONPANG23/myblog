@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jason.dao.TagDao">
+
+
+
+<!--    List<Integer> getTagsId(Tag[] tags) ;-->
+
+    <select id="getTagsId" resultType="integer">
+        select id from tb_tag where name in
+        <foreach collection="array" open="(" close=")"  item="item" separator=",">
+            #{item.name}
+        </foreach>
+    </select>
+
+    <insert id="saveList" parameterType="list">
+        insert into tb_tag (name) values
+        <foreach collection="list" item="item" index= "index" separator =",">
+            (#{item.name})
+        </foreach>
+    </insert>
+
+    <insert id="save" parameterType="tag" >
+     insert into tb_tag (name) values (#{name})
+    </insert>
+
+    <delete id="remove" >
+        delete from tb_tag where id in
+        <foreach collection="array" open="(" close=")" separator="," item="item">
+            #{item}
+        </foreach>
+    </delete>
+
+    <update id="update" parameterType="tag" >
+      update tb_tag set name=#{name} where id =#{id}
+    </update>
+
+    <select id="getOne" resultType="tag" >
+        select id,name from tb_tag where id=#{id}
+   </select>
+
+    <select id="getList" resultType="tag">
+        <if test="tag !=null and tag.name!=null and tag.name!=''">
+            <bind name="pattern_tagName" value="'%'+tag.name+'%'"/>
+        </if>
+        select id,name from tb_tag
+        <where>
+            <if test="tag !=null and tag.name!=null and tag.name!=''">
+                tag_name like #{pattern_tagName}
+            </if>
+        </where>
+        order by id ASC limit ${from},${pageSize}
+    </select>
+
+    <select id="count" resultType="int" parameterType="tag">
+        <if test="name!=null and name!=''">
+            <bind name="pattern_typeName" value="'%'+name+'%'"/>
+        </if>
+        select count(id) from tb_tag
+        <where>
+            <if test="name!=null and name!=''">
+                name like #{pattern_typeName}
+            </if>
+        </where>
+    </select>
+
+    <select id="getByName" parameterType="java.lang.String" resultType="tag">
+        select id,name from tb_tag where name=#{name}
+    </select>
+
+    <select id="getAll" resultType="tag">
+        SELECT t1.id as id ,  t1.`name` as name ,COUNT(t3.`id`) AS count
+        FROM tb_tag t1
+        LEFT JOIN tb_tag_article t2
+        ON t1.`id` = t2.`tag_id`
+        LEFT JOIN tb_article t3
+        ON t2.`article_id` = t3.`id`
+        GROUP BY t1.`id`
+    </select>
+
+</mapper>

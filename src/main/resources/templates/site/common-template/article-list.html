@@ -1,0 +1,92 @@
+<div id="content" class="col-lg-8">
+    <div class="post-list">
+
+
+        <div th:if="${articleList.list} != null or ${#arrays.length(articleList.list)} != 0">
+            <h2 th:if="${categoryId}!=null" >分类: <span  th:text="${categoryName}"></span> </h2>
+            <h2 th:if="${tagId}!=null" >标签: <span th:text="${tagName}"></span> </h2>
+        </div>
+        <br>
+        <div th:if="${articleList.list} == null or ${#arrays.length(articleList.list)} == 0">
+            <h2>这家伙很懒，什么都没有留下 <br><br>  (╯°Д°）╯︵ /(.□ . \)</h2>
+        </div>
+
+        <div th:each="article,i: ${articleList.list}" class="single-post">
+            <div class="inner-post">
+                <div class="post-img" >
+
+                    <a th:href="@{/article(articleId=${article.id})}"  href="#">
+                        <img th:src="@{${article.firstPicture}}"
+
+                             src="../../static/resource_site/images/blog/6.png" alt="blog">
+                    </a>
+                </div>
+                <div class="post-info">
+                    <div class="post-title">
+                        <h3><a th:href="@{/article(articleId=${article.id})}" href="#" th:text="${article.title}"></a></h3>
+                    </div>
+                    <div class="post-content">
+                        <a th:href="@{/article(articleId=${article.id})}">
+                            <p th:text="${article.description}"></p>
+                        </a>
+                    </div>
+                    <div class="blog-meta fix">
+                        <div class="meta-left pull-left">
+                            <ul>
+                                <li> <span class="flaticon-comment-black-oval-bubble-shape user"></span>
+                                    <p><a href="#" th:text="${article.category.name}">Java</a> </p>
+                                </li>
+                                <li> <span class="flaticon-calendar clendar"></span> <p th:text="${#dates.format(article.updateTime,'yyyy-MM-dd')}">20 Jan 2018</p></li>
+                            </ul>
+                        </div>
+                        <div class="post-readmore pull-right">
+                            <a th:href="@{/article(articleId=${article.id})}" href="#" class="readmore-btn">Read More <span>+</span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="post-date one">
+                <span th:text="${i.count}">01</span>
+            </div>
+        </div>
+        <!-- 分页 -->
+        <div class="pagination-area" th:if="${articleList.pages} > 1">
+            <div class="pagination">
+                <ul>
+                    <li th:if="${articleList.hasPreviousPage}" class="prev" >
+                        <a th:if="${categoryId}==null and ${tagId}==null" th:href="@{/(articlePage=${articleList.prePage})}" href="#">PRev</a>
+                        <a th:if="${categoryId}!=null" th:href="@{/category(articlePage=${articleList.prePage},categoryId=${categoryId})}" href="#">PRev</a>
+                        <a th:if="${tagId}!=null" th:href="@{/tag(articlePage=${articleList.prePage},tagId=${tagId})}" href="#">PRev</a>
+                    </li>
+
+                    <li th:if="${articleList.navigateFirstPage} != 1 "
+                        class="page">
+                        <a th:if="${categoryId}==null and ${tagId}==null" th:href="@{/(articlePage=1)}" href="#" >...</a>
+                        <a th:if="${categoryId}!=null" th:href="@{/category(articlePage=1,categoryId=${categoryId})}" href="#" >...</a>
+                        <a th:if="${tagId}!=null" th:href="@{/tag(articlePage=1,tagId=${tagId})}" href="#" >...</a>
+                    </li>
+
+                    <li th:each="page:${articleList.navigatepageNums}"
+                        class="page" th:classappend="${page}==${articleList.pageNum}?'active'">
+                        <a th:if="${categoryId}==null and ${tagId}==null" th:href="@{/(articlePage=${page})}" th:text="${page}" href="#">01</a>
+                        <a th:if="${categoryId}!=null" th:href="@{/category(articlePage=${page},categoryId=${categoryId})}" th:text="${page}" href="#">01</a>
+                        <a th:if="${tagId}!=null" th:href="@{/tag(articlePage=${page},tagId=${tagId})}" th:text="${page}" href="#">01</a>
+                    </li>
+
+                    <li th:if="${articleList.navigateLastPage} != ${articleList.pages}" class="page">
+                        <a th:if="${categoryId}==null and ${tagId}==null" th:href="@{/(articlePage=${articleList.pages})}" href="#">...</a>
+                        <a th:if="${categoryId}!=null" th:href="@{/category(articlePage=${articleList.pages},categoryId=${categoryId})}" href="#">...</a>
+                        <a th:if="${tagId}!=null" th:href="@{/tag(articlePage=${articleList.pages},tagId=${tagId})}" href="#">...</a>
+                    </li>
+
+                    <li th:if="${articleList.hasNextPage}"
+                        class="next pull-right" >
+                        <a th:if="${categoryId}==null and ${tagId}==null" th:href="@{/(articlePage=${articleList.nextPage})}" href="#">Next</a>
+                        <a th:if="${categoryId}!=null" th:href="@{/category(articlePage=${articleList.nextPage},categoryId=${categoryId})}" href="#">Next</a>
+                        <a th:if="${tagId}!=null" th:href="@{/tag(articlePage=${articleList.nextPage},tagId=${tagId})}" href="#">Next</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,28 @@
+﻿<!DOCTYPE HTML>
+<html class="no-js" lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="site/common-template/head::head('Article')"></head>
+	<body>
+	<header th:replace="site/common-template/header-navigation::header(0)"></header>
+
+		<div th:replace="site/common-template/sidebar-menu" class="sidebar-menu "></div>
+
+
+		<div th:replace="site/common-template/breadcrumb-area.html"></div>
+
+		<div class="post-two-area">
+			<div class="container">
+				<div class="row">
+					<div th:replace="site/common-template/article-details"></div>
+					<!-- 右边 4 列 -->
+					<div th:replace="site/common-template/sidebar-info" class="col-lg-4"></div>
+				</div>
+			</div>
+			<div th:replace="site/common-template/decorate"></div>
+		</div>
+		<footer th:replace="site/common-template/footer" class="footer-area"></footer>
+	</body>
+	<th:block th:replace="site/common-template/footer-script"/>
+	<th:block th:replace="site/common-template/pjax"/>
+
+
+</html>

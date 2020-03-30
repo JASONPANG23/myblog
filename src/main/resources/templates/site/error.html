@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="site/common-template/head::head('Error')"></head>
+  <body>
+    <div class="page login-page">
+      <div class="container d-flex align-items-center">
+        <div class="form-holder ">
+          <div class="row">
+            <div class="col-lg-6 bg-white">
+              <div class="form d-flex align-items-center">
+                <div class="content">
+                  <h1 >出错啦！！！</h1>
+                  <h3 th:text="${msg}">服务太热啦，要不然稍等下再来试试~</h3>
+                  <a th:href="@{/}" class="link">回到首页</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

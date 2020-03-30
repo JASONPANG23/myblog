@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/common-template/head"></head>
+  <body>
+    <div class="page login-page">
+      <div class="container d-flex align-items-center">
+        <div class="form-holder ">
+          <div class="row">
+            <!-- Form Panel    -->
+            <div class="col-lg-6 bg-white">
+              <div class="form d-flex align-items-center">
+                <div class="content">
+                  <form method="post" th:action="@{/admin/login}" class="form-validate">
+                    <div class="form-group">
+                      <input id="login-username" type="text" name="username" required data-msg="Please enter your username" class="input-material">
+                      <label for="login-username" class="label-material">User Name</label>
+                    </div>
+                    <div class="form-group">
+                      <input id="login-password" type="password" name="password" required data-msg="Please enter your password" class="input-material">
+                      <label for="login-password" class="label-material">Password</label>
+                    </div>
+                    <div class="form-group">
+                      <label for="remember" class="form-control-label">记住我</label>
+                      <input id="remember" name="remember" type="checkbox" class="form-check-label ">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <th:block th:replace="admin/common-template/footer-script"/>
+
+  </body>
+</html>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jason.dao.TagMapDao">
+
+    <insert id="add">
+        insert into tb_tag_article(tag_id,article_id) values
+        <foreach collection="tagIdList"  item="item" separator=",">
+            (#{item},#{articleId})
+        </foreach>
+    </insert>
+
+    <delete id="remove" >
+        delete from tb_tag_article where tag_id in
+        <foreach collection="tagIdList" open="(" close=")" item="item" separator=",">
+            #{item}
+        </foreach>
+        and article_id=#{articleId}
+    </delete>
+
+
+    <delete id="removeArticleIds" >
+        delete from tb_tag_article where article_id in
+        <foreach collection="array" open="(" close=")"  item="item" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+
+    <select id="getTagIdList" resultType="integer">
+        select tag_id from tb_tag_article
+        where article_id=#{articleId}
+    </select>
+
+    <select id="getTagList" resultType="tag">
+        SELECT t1.id,t1.name
+        FROM tb_tag t1
+        LEFT JOIN tb_tag_article t2
+        ON t1.`id` = t2.`tag_id`
+        WHERE t2.`article_id` = #{articleId}
+    </select>
+
+</mapper>

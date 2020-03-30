@@ -1,0 +1,51 @@
+<!-- id="sticky"-->
+<header th:fragment="header(n)"  class="header-area" >
+    <div class="container">
+        <div class="row">
+            <!--            <div class="col-md-2 col-xs-6">-->
+            <!--                <div class="log-area">-->
+            <!--                    <a th:href="@{/}" href="#">-->
+            <!--                        <img th:src="@{/resource_site/images/logo.png}"-->
+            <!--                                          src="../../static/resource_site/images/logo.png" alt="">-->
+            <!--                    </a>-->
+            <!--                </div>-->
+            <!--            </div>-->
+            <div class="col-md-7">
+                <div class="menu-area white">
+                    <nav>
+                        <ul>
+                            <li th:classappend="${n} == 1?'active':''" class="sub">
+                                <a th:href="@{/}"  href="index.html">首页</a>
+                            </li>
+                            <li th:classappend="${n} == 2?'active':''" class="sub">
+                                <a th:href="@{/}"   href="#">分类
+                                    <span class="fa fa-angle-down"></span>
+                                </a>
+                                <ul class="sub-menu">
+                                    <li th:each="category: ${categories.list}">
+                                        <a
+                                                th:href="@{/category(categoryId=${category.id})}"
+                                                href="#" th:text="${category.name}">关于我
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li><a th:classappend="${n} == 3?'active':''" href="#">about me</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-xs-6">
+                <div class="humbargar-area">
+                    <div class="menu-icon text-right">
+                        <span class="flaticon-menu humbargar color"></span>
+                    </div>
+                    <div class="close-area">
+                        <span class="close"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>

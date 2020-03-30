@@ -1,0 +1,57 @@
+<footer  class="footer-area">
+    <div class="footer-top">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="footer-widget widget-text">
+                        <div class="footer-logo">
+                            <h2><a href="#">Jason</a></h2>
+                        </div>
+                        <div class="widget-content">
+                            <strong style="color: white" th:utext="${#servletContext.getAttribute('userInfo').descriptionFooter}">
+                                乘上与平时相反的列车，为了去见从未见过的风景。<br>
+                                当你无法回头的时候，才是真正的旅途。<br>
+                                人性中是有恶意的，不要以恶意去应对恶意，昂首挺胸吧。</strong>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="footer-widget widget-recent-post">
+                        <div class="widget-title">
+                            <h3>Recent Post</h3>
+                        </div>
+                        <div class="recent-post-list">
+                            <div class="single-post" th:each="recentArticle,i: ${recentArticles.list}"
+                                 th:if="${i.count} < 5">
+                                <p><a th:href="@{/article(articleId=${recentArticle.id})}" href="#"
+                                      th:text="${recentArticle.title}"></a></p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="footer-widget widget-Subscribe">
+                        <div class="widget-title">
+                            <h3>Contact Me</h3>
+                        </div>
+                        <div >
+                            <img th:src="@{${#servletContext.getAttribute('userInfo').contactMe}}" src="../../static/resource_site/images/wechat.jpg" alt="wechat">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="copyright-area">
+                        <p>&copy; 2018 Jason . All rights Reserved.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>

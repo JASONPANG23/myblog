@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jason.dao.CommentDao">
+
+    <sql id="BASE_COLUMN">
+        id  ,nickname ,direct, email  , article_id , content  ,parent_id  ,create_time
+    </sql>
+
+    <resultMap id="commentMap" type="comment">
+        <id column="id" property="id" />
+        <result column="nickname" property="nickname"/>
+        <result column="direct" property="direct"/>
+        <result column="email" property="email"/>
+        <result column="article_id" property="articleId"/>
+        <result column="create_time" property="createTime"/>
+        <result column="direct" property="direct"/>
+<!--        查询子评论-->
+        <collection property="comments"
+                    ofType="comment"
+                    select="com.jason.dao.CommentDao.getCommentsByParentId"
+                    column="id">
+        </collection>
+    </resultMap>
+
+<!--    Integer getCommentNumByArticleId(Integer articleId);-->
+    <select id="getCommentNumByArticleId" resultType="integer">
+        select count(*)
+        from tb_comment
+        where article_id = #{articleId}
+    </select>
+
+<!--    List<Comment> getComments() ;-->
+    <select id="getComments" resultType="comment">
+        select <include refid="BASE_COLUMN"/>
+        from tb_comment
+        order by create_time desc
+    </select>
+
+<!--    getCommentsByArticleId-->
+    <select id="getCommentsByArticleId" resultType="comment">
+        select <include refid="BASE_COLUMN"/>
+        from tb_comment
+        where article_id = #{articleId}
+        order by create_time desc
+    </select>
+
+
+    <!--    void addComment(Comment comment) ; -->
+    <insert id="addComment">
+        insert into tb_comment(
+            <include refid="BASE_COLUMN"/>
+            )values(
+            null,#{nickname},#{direct},#{email},#{articleId},
+            #{content},#{parent.id},#{createTime}
+        )
+    </insert>
+
+<!--    List<Comment> getCommentsParentIsNull() ;-->
+    <select id="getCommentsParentIsNull" resultMap="commentMap">
+        select  <include refid="BASE_COLUMN"/>
+        from tb_comment
+        where parent_id is null
+        order by create_time
+    </select>
+
+<!--    List<Comment> getCommentsByParentId(Integer parentId) ;-->
+    <select id="getCommentsByParentId" resultType="comment">
+        select <include refid="BASE_COLUMN"/>
+        from tb_comment
+        where parent_id = #{parentId}
+    </select>
+<!--    List<Comment> getCommentsByArticleIdAndParentIsNull(Integer articleId) ;-->
+    <select id="getCommentsByArticleIdAndParentIsNull" resultMap="commentMap">
+        select  <include refid="BASE_COLUMN"/>
+        from tb_comment
+        where article_id = #{articleId}
+        and parent_id is null
+        order by create_time
+    </select>
+</mapper>

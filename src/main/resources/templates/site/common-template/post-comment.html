@@ -1,0 +1,96 @@
+
+<script th:src="@{https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js}" src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.min.js"></script>
+<script type="text/javascript" language="javascript">
+    $(function () {
+        $("#commentpost-btn").click(function () {
+            var boo = $("#defaultForm").data('bootstrapValidator').isValid();
+            if(boo) {
+                //todo 表单校验
+                postdata();
+                $("[name='comment-content']").attr("placeholder", "");
+                $("[name='parent.id']").val(-1);
+                $("[name='direct']").val(null);
+
+                $("[name='comment-email']").val('');
+                $("[name='comment-nickname']").val('');
+                $("[name='comment-content']").val('');
+            }
+        });
+    });
+    //点击发布评论
+
+    function postdata() {
+        var url = "/comments/post";
+        var data = {
+            "parent.id" : $("[name='parent.id']").val(),
+            "articleId" : $("[name='articleId']").val(),
+            "direct" : $("[name='direct']").val(),
+            "email" : $("[name='comment-email']").val(),
+            "nickname" : $("[name='comment-nickname']").val(),
+            "content" : $("[name='comment-content']").val()
+        };
+        var func = function (data) {
+            // $(document).scrollTo($("#comment-container"),500);
+        }
+        $("#comment-container").load(url,data,func);
+    }
+
+    function reply(parent_id,direct){
+        $("[name='comment-content']").attr("placeholder", "@"+direct).focus();
+        $("[name='parent.id']").val(parent_id);
+        $("[name='direct']").val(direct) ;
+        // $(document).scrollTo($('#comment-form'),500);
+    }
+    //	验证
+    $(document).ready(function() {
+        $('#defaultForm').bootstrapValidator({
+            // live: 'disabled',
+            message: '无效信息',
+            fields: {
+                "comment-nickname": {
+                    message: '无效用户名',
+                    validators: {
+                        notEmpty: {
+                            message: '用户名不能为空'
+                        },
+                        stringLength: {
+                            min: 3,
+                            max: 18,
+                            message: '用户名在3到18个字符之间'
+                        }
+                    }
+                },
+                "comment-content": {
+                    message: '内容不合法',
+                    validators: {
+                        notEmpty: {
+                            message: '内容不能为空'
+                        },
+                        stringLength: {
+                            min: 3,
+                            max: 200,
+                            message: '内容在3到200个字符之间'
+                        }
+                    }
+                },
+                "comment-email": {
+                    validators: {
+                        emailAddress: {
+                            message: '邮箱无效'
+                        }
+                    }
+                }
+            }
+        });
+
+        // Validate the form manually
+        $('#validateBtn').click(function() {
+            $('#defaultForm').bootstrapValidator('validate');
+        });
+
+        $('#resetBtn').click(function() {
+            $('#defaultForm').data('bootstrapValidator').resetForm(true);
+        });
+    });
+</script>

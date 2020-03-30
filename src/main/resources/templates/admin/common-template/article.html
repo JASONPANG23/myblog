@@ -1,0 +1,85 @@
+<div id="content">
+<header th:replace="admin/common-template/page-header::page_header('Article')" class="page-header"></header>
+<section class="tables">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header d-flex align-items-center">
+                        <h3 class="h4">博客管理</h3>
+                    </div>
+                    <div class="card-body">
+                        <div id="table-container" class="table-responsive">
+                            <table th:fragment="list" class="table">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>分类</th>
+                                    <th>标题</th>
+                                    <th>状态</th>
+                                    <th>评论状态</th>
+                                    <th>浏览量</th>
+                                    <th>评论数</th>
+                                    <th>创建时间</th>
+                                    <th>更新时间</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="article ,i: ${articles.list}">
+                                    <td th:text="${i.count}" scope="row">1</td>
+                                    <td th:text="${article.category.name}">Java</td>
+                                    <td th:text="${article.title}">Spring</td>
+                                    <td th:text="${article.published}?'已发布':'未发布'">未发布</td>
+                                    <td th:text="${article.comment}?'已开启':'未开启'">未开启</td>
+                                    <td th:text="${article.views}">32</td>
+                                    <td th:text="${article.commentNum}">32</td>
+                                    <td th:text="${#dates.format(article.createTime,'yyyy-MM-dd')}">32</td>
+                                    <td th:text="${#dates.format(article.updateTime,'yyyy-MM-dd')}">32</td>
+                                    <td>
+                                        <a target="_blank" th:href="@{/article(articleId=${article.id})}" class="btn small btn-warning" type="button">预览</a>
+                                        <a th:href="@{/admin/article_edit(id=${article.id})}" class="btn small btn-primary" type="button">修改</a>
+
+                                        <button th:data-id="${article.id}"
+                                                onclick="deleteArticleById(this.getAttribute('data-id'))"
+                                                class="btn small btn-danger"
+                                                type="button">删除
+                                        </button>
+                                </tr>
+                                <tr th:if="${articles.pages} > 1">
+                                    <td colspan="10" class="col-sp" >
+                                        <a th:href="@{/admin/article(page=${articles.prePage},size=8)}"
+                                           th:if="${articles.hasPreviousPage}"
+                                           type="button">
+                                            上一页
+
+                                        </a>
+                                        <a th:href="@{/admin/article(page=${articles.nextPage},size=8)}"
+                                           th:if="${articles.hasNextPage}"
+                                           type="button">
+                                            下一页
+
+                                        </a>
+                                        <span th:text="${articles.pageNum}">13 </span>/<span th:text="${articles.pages}">   32</span> 页
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+
+        function deleteArticleById(articleId){
+            var url = "/admin/article/delete";
+            var data = {id:articleId} ;
+            $("#table-container").load(url,data);
+        }
+
+
+    </script>
+</section>
+</div>

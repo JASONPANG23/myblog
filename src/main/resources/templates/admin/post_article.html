@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/common-template/head"></head>
+<body>
+<div class="page">
+
+  <header th:replace="admin/common-template/header" class="header"></header>
+  <div class="page-content d-flex align-items-stretch">
+
+    <nav th:replace="admin/common-template/header-navigation" class="side-navbar"></nav>
+
+    <div class="content-inner">
+
+      <div th:replace="admin/common-template/post-article"></div>
+
+      <footer th:replace="admin/common-template/footer" class="main-footer"></footer>
+    </div>
+  </div>
+</div>
+
+</body>
+<th:block th:replace="admin/common-template/footer-script"/>
+<th:block th:replace="admin/common-template/pjax"/>
+</html>

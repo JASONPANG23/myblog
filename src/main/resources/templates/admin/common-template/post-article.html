@@ -1,0 +1,107 @@
+<div id="content">
+<header  th:replace="admin/fragment::page_header('Post Article')"  class="page-header">
+    <div class="container-fluid">
+        <h2 class="no-margin-bottom">Tables</h2>
+    </div>
+</header>
+<section class="tables">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header d-flex align-items-center">
+                        <h3 class="h4">编辑博客</h3>
+                    </div>
+                    <div class="card-body">
+                        <form id="blog-form" th:object="${article}" th:action="@{/admin/article_edit/save}" action="#" method="post" class="form-group">
+                            <input type="hidden" name="id" th:value="*{id}">
+                            <input type="hidden" name="published" th:value="*{published}">
+                            <div class="form-group">
+                                <label calss="form-control-label"><h4>博客名称</h4></label>
+                                <input name="title" type="text" th:value="*{title}" required  placeholder="博客名称（必填）" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label calss="form-control-label"><h4>博客分类</h4></label>
+                                <select name="categoryId" required class="form-control mb-3">
+                                    <option th:each="category: ${categories}"
+                                            th:value="${category.id}"
+                                            th:selected="*{category.id}==${category.id}?'true':'false'"
+                                            th:text="${category.name}">
+                                        option 1
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label calss="form-control-label"><h4>标签</h4></label>
+                                <input class="form-control mb-3" type="text" id="tags" name="tags" th:value="${tags}"
+                                       data-role='tags-input'>
+                            </div>
+                            <div class="form-group">
+                                <div id="md-content" style="z-index: 10 !important">
+                                    <textarea  name="content" th:text="*{content}" required style="display:none;"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label calss="form-control-label"><h4>博客首图</h4></label>
+                                <input name="firstPicture" th:value="*{firstPicture}" required type="text" placeholder="博客首图（必填）" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label calss="form-control-label"><h4>博客描述</h4></label>
+                                <textarea name="description" th:text="*{description}" class="form-control mb-3" placeholder="博客描述（必填）" required  rows="3" cols="100"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label calss="form-control-label">开启评论</label>
+                                <input name="comment" type="checkbox" th:checked="*{comment}">
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="返回" class="btn">
+                                <input onclick="set_published(false)" type="submit" value="草稿" class="btn btn-warning">
+                                <input onclick="set_published(true)" type="submit" value="发布" class="btn btn-primary">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</section>
+
+    <link th:href="@{/resource_admin/vendor/editormd/css/editormd.min.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/resource_admin/vendor/jquery-input/jquery-tagsinput.min.css}" rel="stylesheet" type="text/css">
+
+
+    <script th:src="@{https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js}" src="../../static/resource_admin/vendor/jquery/jquery.min.js"></script>
+    <script th:src="@{https://cdn.bootcss.com/twitter-bootstrap/4.4.1/js/bootstrap.min.js}" src="../../static/resource_admin/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script th:src="@{/resource_admin/vendor/editormd/editormd.min.js}" src="../../static/resource_admin/vendor/editormd/editormd.min.js"></script>
+    <script>
+        //初始化Markdown编辑器
+        var contentEditor;
+        $(function() {
+            contentEditor = editormd("md-content", {
+                width   : "96%",
+                height  : 640,
+                syncScrolling : "single",
+                path    : "/resource_admin/vendor/editormd/lib/",
+
+                //文件上传相关配置
+                imageUpload : true,
+                imageFormats : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+                imageUploadURL : "/admin/attach/image"
+            });
+        });
+
+        function set_published(published){
+            $("[name='published']").val(published)
+        }
+    </script>
+    <script src="https://cdn.bootcss.com/jquery-color/2.1.2/jquery.color.js"></script>
+    <script th:src="@{/resource_admin/vendor/jquery-input/jquery-tagsinput.min.js}"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('[data-role="tags-input"]').tagsInput();
+        });
+    </script>
+</div>
