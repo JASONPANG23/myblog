@@ -6,9 +6,7 @@
          id ,title , content,  description ,first_picture , published , comment  , views , category_id , create_time , update_time
     </sql>
 
-    <sql id="BASE_COLUMN_EXCLUDE_CONTENT">
-        id ,title,  description ,first_picture , published , comment  , views , category_id , create_time , update_time
-    </sql>
+
 
 <!--    id  title content  description  first_picture   published  comment   views  create_time  update_time  category_id  tag_id , tag_name-->
 
@@ -97,7 +95,7 @@
                 and t3.tag_id = #{tagId}
             </if>
         </where>
-        order by update_time desc
+        order by create_time desc
 
     </select>
 

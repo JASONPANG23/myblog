@@ -68,4 +68,4 @@ CREATE TABLE tb_tag_article(
 
 INSERT INTO tb_user(username,password,role)
 VALUES ("admin","$2a$10$zu8erEqhQg9d/OTRWxcBce6A0IhNQtmhgHhZzc9hcwMI9vYOhkpMK","admin");
-admin $2a$10$zu8erEqhQg9d/OTRWxcBce6A0IhNQtmhgHhZzc9hcwMI9vYOhkpMK admin
+-- admin $2a$10$zu8erEqhQg9d/OTRWxcBce6A0IhNQtmhgHhZzc9hcwMI9vYOhkpMK admin

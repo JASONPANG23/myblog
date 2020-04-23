@@ -15,7 +15,7 @@
                         <p><a href="#" th:text="${article.category.name}">Admin</a> </p>
                     </li>
                     <li> <span class="flaticon-calendar clendar"></span>
-                        <p th:text="${#dates.format(article.updateTime,'yyyy-MM-dd')}">20 Jan 2018  </p>
+                        <p th:text="${#dates.format(article.createTime,'yyyy-MM-dd')}">20 Jan 2018  </p>
                     </li>
                     <li th:if="${article.comment}"> <span class="flaticon-chat comment"></span> <p>Comment</p></li>
                     <li > 浏览数： <p th:text="${article.views}">Comment</p></li>
@@ -58,7 +58,7 @@
         -->
 
         <!--评论-->
-        <div class="comment-area box-shadow mt-70" th:if="${article.comment}">
+        <div class="comment-area box-shadow mt-70" th:if="${article.comment}" >
             <div class="section-title">
                 <!--										<span th:text="${article.commentNum}">02</span>-->
                 <h3>评论</h3>
@@ -177,6 +177,7 @@
 
     <script th:src="@{https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js}" src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
     <script th:src="@{https://cdn.bootcss.com/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.min.js}"></script>
+
     <script type="text/javascript" language="javascript">
         $(function () {
             $("#commentpost-btn").click(function () {

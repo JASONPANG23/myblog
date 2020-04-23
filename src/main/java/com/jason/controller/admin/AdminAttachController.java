@@ -23,10 +23,10 @@ import java.util.*;
 @RequestMapping("/admin/attach")
 public class AdminAttachController {
 
-    @Autowired
+    @Autowired(required = false)
     private QiniuService qiniuService ;
 
-    @Autowired
+    @Autowired(required = false)
     private QiNiuProperties qiNiuProperties;
 
     @ResponseBody

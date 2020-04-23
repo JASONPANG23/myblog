@@ -22,7 +22,7 @@ import org.springframework.context.annotation.Configuration;
 // 自动装配条件为IQiniuService这个存在classpath路径下
 @ConditionalOnClass(QiniuService.class)
 // 当配置文件中 qinniu = true时 实例化此类，默认为true
-@ConditionalOnProperty(prefix = "qiniu",value = "true",matchIfMissing = true)
+@ConditionalOnProperty(prefix = "qiniu.enable",value = "true",matchIfMissing = true)
 public class QiNiuYunServiceAutoConfiguration {
 
     @Autowired

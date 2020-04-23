@@ -1,13 +1,13 @@
 <div id="content" class="col-lg-8">
     <div class="post-list">
-
-
         <div th:if="${articleList.list} != null or ${#arrays.length(articleList.list)} != 0">
             <h2 th:if="${categoryId}!=null" >分类: <span  th:text="${categoryName}"></span> </h2>
             <h2 th:if="${tagId}!=null" >标签: <span th:text="${tagName}"></span> </h2>
+
         </div>
-        <br>
+
         <div th:if="${articleList.list} == null or ${#arrays.length(articleList.list)} == 0">
+            <br>
             <h2>这家伙很懒，什么都没有留下 <br><br>  (╯°Д°）╯︵ /(.□ . \)</h2>
         </div>
 
@@ -36,7 +36,7 @@
                                 <li> <span class="flaticon-comment-black-oval-bubble-shape user"></span>
                                     <p><a href="#" th:text="${article.category.name}">Java</a> </p>
                                 </li>
-                                <li> <span class="flaticon-calendar clendar"></span> <p th:text="${#dates.format(article.updateTime,'yyyy-MM-dd')}">20 Jan 2018</p></li>
+                                <li> <span class="flaticon-calendar clendar"></span> <p th:text="${#dates.format(article.createTime,'yyyy-MM-dd')}">20 Jan 2018</p></li>
                             </ul>
                         </div>
                         <div class="post-readmore pull-right">

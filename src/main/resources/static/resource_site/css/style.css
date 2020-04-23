@@ -40,6 +40,7 @@ Version: 1.0
   font-size: 16px; }
 html,
 body {
+
   height: 100%;
   font-family: "Poppins", sans-serif;
   font-weight: 400;
@@ -779,7 +780,7 @@ ul {
   background-size: cover;
 }
 .banner-area.banner-two {
-  background: url(http://q74jklpez.bkt.clouddn.com/bg.jpg) no-repeat;
+  background: url(http://q8m49i3f9.bkt.clouddn.com/bg.jpg) no-repeat;
   background-size: cover;
   background-position: center center;
   padding-top: 200px;
@@ -798,8 +799,7 @@ ul {
   border: none;}
   .banner-area.banner-three {
     /*自定义*/
-    background: url(http://q74jklpez.bkt.clouddn.com/bg.jpg) no-repeat;
-    /*background: url(../images/banner/2.jpg) no-repeat;*/
+    background: url(http://q8m49i3f9.bkt.clouddn.com/bg.jpg) no-repeat;
     background-size: cover;
     background-attachment: fixed;
     background-position: center center;
@@ -1168,13 +1168,15 @@ ul {
 ==============================================================*/
 .breadcrumb-area {
   /*背景*/
-  background: url(http://q74jklpez.bkt.clouddn.com/bg.jpg) no-repeat;
-  /*background: #6c62ff ;*/
+  background: url(http://q8m49i3f9.bkt.clouddn.com/bg.jpg) no-repeat;
+  background: #6c62ff ;
   background-size: cover;
   background-position: center;
+  background-attachment: fixed;
+
   padding-top: 283px;
   padding-bottom: 187px;
-  background-attachment: fixed; }
+  }
   .breadcrumb-area .breadcrumb-title h2 {
     font-size: 60px;
     font-weight: 700;
@@ -1915,7 +1917,8 @@ ul {
     color: #7167ff;
     margin-top: 0px;
     margin-bottom: 15px;
-    letter-spacing: 2px; }
+    letter-spacing: 2px;
+  }
   .sidebar-widget .single-widget .widget-inner {
     padding: 30px;
     border: 1px dashed #e9e8ff; }
@@ -1986,8 +1989,10 @@ ul {
     .sidebar-widget .single-widget.profile-widget .widget-inner .social-media ul li {
       margin-right: 10px; }
   .sidebar-widget .single-widget.category-widget .widget-title h3 {
+
     padding-left: 30px;
-    margin-bottom: 20px; }
+    margin-bottom: 20px;
+  }
   .sidebar-widget .single-widget.category-widget .widget-inner {
     padding: 25px 0 10px 0; }
   .sidebar-widget .single-widget.category-widget .category-list ul {

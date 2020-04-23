@@ -15,6 +15,7 @@ public class QiNiuProperties {
     private String zone ;
     private String domain ;
     private String cdnPrefix = "cdn" ;
+    private Boolean enable ;
 
     public String getZone() {
         return zone;
@@ -62,5 +63,13 @@ public class QiNiuProperties {
 
     public void setDomain(String domain) {
         this.domain = domain;
+    }
+
+    public Boolean getEnable() {
+        return enable;
+    }
+
+    public void setEnable(Boolean enable) {
+        this.enable = enable;
     }
 }

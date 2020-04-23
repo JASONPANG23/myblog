@@ -59,7 +59,7 @@ public class SiteIndexController {
                         paramDTO.getArticlePages());
         model.addAttribute("articleList",articleList) ;
 
-        System.out.println("X-Pjax "+request.getHeader("X-Pjax"));
+        log.info("X-Pjax {}",request.getHeader("X-Pjax"));
         if(request.getHeader("X-Pjax") != null){
             return "site/common-template/article-list" ;
         }
@@ -82,7 +82,7 @@ public class SiteIndexController {
         model.addAttribute("articleList",articleList) ;
         model.addAttribute("tagId",tag.getId()) ;
         model.addAttribute("tagName",tag.getName()) ;
-        System.out.println("X-Pjax "+request.getHeader("X-Pjax"));
+        log.info("X-Pjax {}",request.getHeader("X-Pjax"));
         if(request.getHeader("X-Pjax") != null){
             return "site/common-template/article-list" ;
         }
@@ -107,7 +107,7 @@ public class SiteIndexController {
         model.addAttribute("articleList",articleList) ;
         model.addAttribute("categoryId",category.getId()) ;
         model.addAttribute("categoryName",category.getName()) ;
-        System.out.println("X-Pjax "+request.getHeader("X-Pjax"));
+        log.info("X-Pjax {}",request.getHeader("X-Pjax"));
         if(request.getHeader("X-Pjax") != null){
             return "site/common-template/article-list" ;
         }
@@ -132,7 +132,7 @@ public class SiteIndexController {
 
         articleService.incView(article.getId());
         List<Comment> comments = commentService.getCommentsByArticleId(paramDTO.getArticleId());
-        System.out.println("X-Pjax "+request.getHeader("X-Pjax"));
+        log.info("X-Pjax {}",request.getHeader("X-Pjax"));
         model.addAttribute("article",article);
         model.addAttribute("comments",comments);
         model.addAttribute("articleTags",article.getTagList()) ;
